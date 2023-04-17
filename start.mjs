@@ -81,7 +81,7 @@ app.post("/print", async (req, res) => {
   const label = config.labels.find((l) => l.displayName === displayName);
 
   if (!label) {
-    res.statusCode(404);
+    res.status(404);
     res.send({ error: "Label not found" });
     return;
   }
