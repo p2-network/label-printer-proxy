@@ -76,9 +76,9 @@ const attemptPrint = async (labelTemplateName, printerName, tag) => {
 
 app.post("/print", async (req, res) => {
   // TODO: input validation :)
-  const { displayName, tag } = req.body;
+  const { idx, tag } = req.body;
 
-  const label = config.labels.find((l) => l.displayName === displayName);
+  const label = config.labels[parseInt(idx, 10)];
 
   if (!label) {
     res.status(404);
