@@ -13,6 +13,7 @@
 
   <key>ProgramArguments</key>
   <array>
+    <string>/opt/homebrew/bin/node</string>
     <string>/opt/p2-network/label-printer-proxy/start.mjs</string>
   </array>
 
