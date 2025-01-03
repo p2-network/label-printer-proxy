@@ -5,6 +5,9 @@
   <key>Label</key>
   <string>nz.patrick.label-printer-proxy</string>
 
+  <key>WorkingDirectory</key>
+  <string>/opt/p2-network/label-printer-proxy/</string>
+
   <key>Program</key>
   <string>/opt/homebrew/bin/node</string>
 
