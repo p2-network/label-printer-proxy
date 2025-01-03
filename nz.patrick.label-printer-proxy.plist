@@ -18,5 +18,10 @@
   <key>StandardErrorPath</key>
   <string>/opt/p2-network/log/label-printer-proxy.err.log</string>
 
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+
 </dict>
 </plist>
