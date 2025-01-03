@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>nz.patrick.label-printer-proxy</string>
+
+  <key>WorkingDirectory</key>
+  <string>/opt/p2-network/label-printer-proxy/</string>
+
+  <key>Program</key>
+  <string>/opt/homebrew/bin/node</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/node</string>
+    <string>/opt/p2-network/label-printer-proxy/start.mjs</string>
+  </array>
+
+  <key>StandardOutPath</key>
+  <string>/opt/p2-network/log/label-printer-proxy.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/opt/p2-network/log/label-printer-proxy.err.log</string>
+
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+
+</dict>
+</plist>
