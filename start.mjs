@@ -46,8 +46,6 @@ const attemptPrint = async (printerName, labelXml) => {
     labelSetXml: ""
   });
 
-  console.log("body", body.toString());
-
   const output = await fetch(
     "https://" + host + ":41951/DYMO/DLS/Printing/PrintLabel",
     {
@@ -129,7 +127,7 @@ app.post("/print2", async (req, res) => {
 
   const labelXml = template({ ...(vars ?? {}) });
 
-  await writeFile(labelFilePath + ".output.dymo", labelXml);
+  // await writeFile(labelFilePath + ".output.dymo", labelXml);
 
   const x = await attemptPrint(label.printer, labelXml);
 
