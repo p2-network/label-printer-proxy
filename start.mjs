@@ -5,9 +5,6 @@ import morgan from "morgan";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
-// grumble grumble node / dymo
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
 const app = express();
 const port = 3000;
 
