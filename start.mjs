@@ -117,7 +117,7 @@ app.post("/print2", async (req, res) => {
 
   const template = handlebars.default.compile(templateData.toString());
 
-  const labelXml = template({ vars });
+  const labelXml = template({ ...(vars ?? {}) });
 
   await writeFile(labelFilePath + ".output.dymo", labelXml);
 
