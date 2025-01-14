@@ -33,23 +33,12 @@ app.get("/labels", (req, res) => {
   res.send(config.labels);
 });
 
-const attemptPrint = async (labelTemplateName, printerName, tag) => {
-  const labelName = resolve(labelTemplateName);
-  const templateData = await readFile(labelName);
-
-  const template = handlebars.default.compile(templateData.toString());
-
-  const labelXml = template({
-    qrDataString: `URL:https://a.twopats.live/${tag}`,
-    qrDataURL: `https://a.twopats.live/${tag}`,
-    labelText: tag,
-  });
-
+const attemptPrint = async (printerName, labelXml) => {
   const body = new URLSearchParams({
     printerName,
     printParamsXml: "",
     labelXml,
-    labelSetXml: "",
+    labelSetXml: ""
   });
 
   const output = await fetch(
@@ -63,12 +52,12 @@ const attemptPrint = async (labelTemplateName, printerName, tag) => {
         "Accept-Language": "en-AU,en;q=0.9",
         "Content-Type": "application/x-www-form-urlencoded",
         "User-Agent":
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.4 Safari/605.1.15",
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.4 Safari/605.1.15"
       },
       method: "POST",
       mode: "cors",
       redirect: "follow",
-      referrer: "http://localhost:9001/",
+      referrer: "http://localhost:9001/"
     }
   );
 
@@ -76,6 +65,15 @@ const attemptPrint = async (labelTemplateName, printerName, tag) => {
   const outputText = await output.text();
   console.log("output text", outputText);
 };
+
+app.get("/printers", async (req, res) => {
+  const printersRequest = await fetch(
+    "https://" + host + ":41951/DYMO/DLS/Printing/GetPrinters"
+  );
+  const printersText = await printersRequest.text();
+
+  res.send({ printersText });
+});
 
 app.post("/print", async (req, res) => {
   // TODO: input validation :)
@@ -89,7 +87,42 @@ app.post("/print", async (req, res) => {
     return;
   }
 
-  const x = await attemptPrint(label.label, label.printer, tag);
+  const labelName = resolve(labelTemplateName);
+  const templateData = await readFile(labelName);
+
+  const template = handlebars.default.compile(templateData.toString());
+
+  const labelXml = template({
+    qrDataString: `URL:https://a.twopats.live/${tag}`,
+    qrDataURL: `https://a.twopats.live/${tag}`,
+    labelText: tag
+  });
+
+  const x = await attemptPrint(label.printer, labelXml);
+
+  res.send({ x });
+});
+
+app.post("/print2", async (req, res) => {
+  // TODO: input validation :)
+  const { idx, vars } = req.body;
+
+  const label = config.labels[parseInt(idx, 10)];
+
+  if (!label) {
+    res.status(404);
+    res.send({ error: "Label not found" });
+    return;
+  }
+
+  const labelName = resolve(labelTemplateName);
+  const templateData = await readFile(labelName);
+
+  const template = handlebars.default.compile(templateData.toString());
+
+  const labelXml = template({ vars });
+
+  const x = await attemptPrint(label.printer, labelXml);
 
   res.send({ x });
 });
