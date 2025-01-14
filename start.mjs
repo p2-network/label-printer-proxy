@@ -38,6 +38,8 @@ const attemptPrint = async (printerName, labelXml) => {
     labelSetXml: ""
   });
 
+  console.log("body", body.toString());
+
   const output = await fetch(
     "https://" + host + ":41951/DYMO/DLS/Printing/PrintLabel",
     {
