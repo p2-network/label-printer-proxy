@@ -2,7 +2,7 @@ import cookieParser from "cookie-parser";
 import express, { json, urlencoded } from "express";
 import handlebars from "handlebars";
 import morgan from "morgan";
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 const app = express();
@@ -118,6 +118,8 @@ app.post("/print2", async (req, res) => {
   const template = handlebars.default.compile(templateData.toString());
 
   const labelXml = template({ vars });
+
+  await writeFile(labelFilePath + ".output.dymo", labelXml);
 
   const x = await attemptPrint(label.printer, labelXml);
 
