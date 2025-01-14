@@ -87,8 +87,8 @@ app.post("/print", async (req, res) => {
     return;
   }
 
-  const labelName = resolve(labelTemplateName);
-  const templateData = await readFile(labelName);
+  const labelFilePath = resolve(label.label);
+  const templateData = await readFile(labelFilePath);
 
   const template = handlebars.default.compile(templateData.toString());
 
@@ -115,8 +115,8 @@ app.post("/print2", async (req, res) => {
     return;
   }
 
-  const labelName = resolve(labelTemplateName);
-  const templateData = await readFile(labelName);
+  const labelFilePath = resolve(label.label);
+  const templateData = await readFile(labelFilePath);
 
   const template = handlebars.default.compile(templateData.toString());
 
